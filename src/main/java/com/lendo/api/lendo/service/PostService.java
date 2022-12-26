@@ -22,6 +22,8 @@ public interface PostService {
 	
 	public void addComment(Post post, Comment comment);
 	
+	public List<Post> getPostsByUserId(Long id);
+	
 	public Page<GetPostListing> getListings(Optional<String> query, Integer pageNumber, Integer pageSize,
 			Optional<String> sortBy, Optional<String> sortOrder);
 }

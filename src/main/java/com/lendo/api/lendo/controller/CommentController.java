@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +46,16 @@ public class CommentController extends BaseController {
 		
 		return new ResponseEntity<ResponseEnvelope>(
 				ResponseEnvelope.builder().success(true).result(Message.value("message.comment.delete.success")).build(),
+				HttpStatus.OK);
+	}
+	
+	@GetMapping("/post/{id}")
+	public ResponseEntity<?> getCommentsByPostId(@PathVariable() Long id) throws Exception {
+	
+		return new ResponseEntity<ResponseEnvelope>(ResponseEnvelope.builder()
+				.success(true)
+				.result(Message.value("message.comment.get.success"))
+				.data(commentService.getCommentsByPostId(id)).build(),
 				HttpStatus.OK);
 	}
 	

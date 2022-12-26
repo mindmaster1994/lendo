@@ -1,5 +1,6 @@
 package com.lendo.api.lendo.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -24,5 +25,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	Page<GetPostListing> getListings(String q, Pageable pageable);
 
 	public Optional<Post> findByTitle(String title);
+	
+	public List<Post> findByUserId(Long id);
 	
 }

@@ -21,6 +21,7 @@ import com.lendo.api.lendo.model.User;
 import com.lendo.api.lendo.repository.PostRepository;
 import com.lendo.api.lendo.response.Message;
 import com.lendo.api.lendo.service.PostService;
+import com.lendo.api.lendo.service.UserService;
 import com.lendo.api.lendo.utils.Utils;
 
 @Service
@@ -28,6 +29,9 @@ public class PostServiceImpl implements PostService {
 	
 	@Autowired
 	PostRepository postRepository;
+	
+	@Autowired
+	UserService userService;
 	
 	@Override
 	public Post getPostById(Long id) {
@@ -99,6 +103,19 @@ public class PostServiceImpl implements PostService {
 		
 		post.setComments(comments);
 		postRepository.save(post);	
+	}
+
+	@Override
+	public List<Post> getPostsByUserId(Long id) {
+		
+		User user = userService.getUserById(id);
+		if(user == null) {
+			throw new BusinessException(Message.value("message.user.not.found"), "",
+					ErrorCode.NOT_FOUND.name());
+		}
+		
+		List<Post> posts = postRepository.findByUserId(id);
+		return posts;
 	}
 
 	

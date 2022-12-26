@@ -9,6 +9,8 @@ public interface UserService {
 	
 	public User getUserByEmail(String email);
 	
+	public User getUserById(Long id);
+	
 	public void create(UserDTO user);
 	
 	public void updateUser(User user);

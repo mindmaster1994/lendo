@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,6 +58,16 @@ public class PostController extends BaseController {
 				.success(true)
 				.result(Message.value("message.post.get.success"))
 				.data(postService.getAll()).build(),
+				HttpStatus.OK);
+	}
+	
+	@GetMapping("/user/{id}")
+	public ResponseEntity<?> getPostsByUserId(@PathVariable() Long id) throws Exception {
+	
+		return new ResponseEntity<ResponseEnvelope>(ResponseEnvelope.builder()
+				.success(true)
+				.result(Message.value("message.post.get.success"))
+				.data(postService.getPostsByUserId(id)).build(),
 				HttpStatus.OK);
 	}
 	

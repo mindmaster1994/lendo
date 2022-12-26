@@ -1,7 +1,10 @@
 package com.lendo.api.lendo.service.impls;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,6 +63,24 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public List<Comment> getAll(){
 		List<Comment> comments = commentRepository.findAll();
+		
+		return comments;
+	}
+	
+	@Override
+	public List<Comment> getCommentsByPostId(Long id) {
+		
+		Post post = postService.getPostById(id);
+		
+		if(post == null) {
+			throw new BusinessException(Message.value("message.post.not.found"), "",
+					ErrorCode.NOT_FOUND.name());
+		}
+		
+		List<Comment> comments = post.getComments()
+				.stream()
+				.sorted((a,b)-> (a.getId().intValue() - b.getId().intValue()))
+				.collect(Collectors.toList());
 		
 		return comments;
 	}
