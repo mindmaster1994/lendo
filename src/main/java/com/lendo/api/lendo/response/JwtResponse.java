@@ -10,12 +10,10 @@ import lombok.Data;
 public class JwtResponse {
 	private String token;
 	private String type = "Bearer";
-	private User user;
 
-	public JwtResponse(String token, User user) {
+	public JwtResponse(String token) {
 		super();
 		this.token = token;
-		this.user = user;
 	}
 
 }

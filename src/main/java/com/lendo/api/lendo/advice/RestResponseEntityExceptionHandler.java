@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -121,18 +120,5 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 		return new ResponseEntity<Object>(envelop, HttpStatus.OK);
 	}
 
-	@ExceptionHandler(ConstraintViolationException.class)
-	public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex,
-			WebRequest request) {
-
-		log.error(ex.getMessage(), ex);
-
-		ResponseEnvelope envelop = ResponseEnvelope.builder().success(false).time(LocalDateTime.now())
-				.errors(Arrays.asList(new ErrorBody(HttpStatus.BAD_REQUEST,
-						localeService.getMessage(ex.getConstraintName(), request.getLocale()))))
-				.build();
-
-		return new ResponseEntity<Object>(envelop, HttpStatus.OK);
-	}
 
 }
